@@ -1,4 +1,4 @@
-const CACHE = "mexo-v6";
+const CACHE = "mexo-v33";
 const KERN = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
 
 // Robuust: cache elk bestand afzonderlijk, zodat één ontbrekend bestand
