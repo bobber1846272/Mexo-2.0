@@ -1,5 +1,5 @@
-const CACHE = "mexo-v33";
-const KERN = ["./", "./index.html", "./manifest.json", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
+const CACHE = "mexo-v35";
+const KERN = ["./", "./index.html", "./config.js", "./manifest.json", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png"];
 
 // Robuust: cache elk bestand afzonderlijk, zodat één ontbrekend bestand
 // de installatie van de service worker niet blokkeert.
