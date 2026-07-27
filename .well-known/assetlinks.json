@@ -3,10 +3,9 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "info.mexo.app",
+      "package_name": "mexo.info.app",
       "sha256_cert_fingerprints": [
-        "C6:96:75:3E:B7:E5:DB:48:5F:C7:F8:1B:9F:95:1C:73:48:DF:74:BC:B1:B1:74:50:E3:BB:4F:48:95:0B:AE:8D",
-        "9B:20:5A:43:C6:CA:74:AD:63:6A:25:76:28:9B:12:AD:CB:B3:8A:1E:E7:30:84:6A:F6:83:9D:63:52:D9:F8:8B"
+        "D3:BA:72:D7:4F:BF:9E:14:8E:77:07:F0:E2:6E:53:54:F1:64:9D:8F:C9:5D:AF:2E:93:15:A9:4C:74:56:56:DD"
       ]
     }
   }
