@@ -5,7 +5,8 @@
       "namespace": "android_app",
       "package_name": "mexo.info.app",
       "sha256_cert_fingerprints": [
-        "D3:BA:72:D7:4F:BF:9E:14:8E:77:07:F0:E2:6E:53:54:F1:64:9D:8F:C9:5D:AF:2E:93:15:A9:4C:74:56:56:DD"
+        "D3:BA:72:D7:4F:BF:9E:14:8E:77:07:F0:E2:6E:53:54:F1:64:9D:8F:C9:5D:AF:2E:93:15:A9:4C:74:56:56:DD",
+        "B0:14:FC:14:CA:25:8E:43:FC:4C:AE:8C:C5:9B:B7:78:4C:70:89:CD:94:B6:48:51:5F:2D:55:53:53:49:06:E2"
       ]
     }
   }
