@@ -1,13 +1,11 @@
-[
-  {
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "mexo.info.app",
-      "sha256_cert_fingerprints": [
-        "D3:BA:72:D7:4F:BF:9E:14:8E:77:07:F0:E2:6E:53:54:F1:64:9D:8F:C9:5D:AF:2E:93:15:A9:4C:74:56:56:DD",
-        "B0:14:FC:14:CA:25:8E:43:FC:4C:AE:8C:C5:9B:B7:78:4C:70:89:CD:94:B6:48:51:5F:2D:55:53:53:49:06:E2"
-      ]
-    }
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "mexo.info.app",
+    "sha256_cert_fingerprints": [
+      "EA:3F:1D:ED:F1:71:D5:08:FF:DE:A5:B4:39:3B:8D:62:1C:91:BD:78:04:0A:0C:5C:77:38:6C:BD:19:2C:B7:45",
+      "F0:7C:93:EE:83:A9:B4:58:E9:BC:A8:4E:95:1C:90:C9:C9:6E:5E:9F:39:49:67:4E:CE:02:C8:21:73:2A:AF:3F"
+    ]
   }
-]
+}]
