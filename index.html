@@ -143,7 +143,7 @@ react/cjs/react-jsx-runtime.production.js:
 */
 </script>
 
-<!-- MEXO VERDELER v10 (incl. zijbalk desktop). Verwijder dit blok + de code-edits om terug te draaien. -->
+<!-- MEXO VERDELER v11 (beeldvullende desktop-layout). Verwijder dit blok + de code-edits om terug te draaien. -->
 <script>
 /* ── Mexo Verdeler — in-app, in de echte Mexo-stijl ──────────────────
    Vult #mv-mount (Budget-tab) en #mv-settings-mount (Instellingen).
@@ -226,6 +226,14 @@ react/cjs/react-jsx-runtime.production.js:
   var CSS = ""
   + "[data-mv-root]{--acc:#2DD4A7;--deep:#0C8F63;--ink:#0F1613;--card:#fdfefd;--rand:#e4eae5;--rand2:#ccd6cf;--txt:#26332c;--txt3:#73837a;--txt4:#a4b2a9;--tint:#eefaf4;--acctxt:#0a7a52;--bonus:#F59E0B;--err:#c0392b;--grad:linear-gradient(165deg,#0F1613 0%,#14251e 55%,#0C8F63 160%);font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--txt);max-width:460px;margin:0 auto}"
   + "[data-mv-root] *{box-sizing:border-box}"
+  + "[data-mv-root].mv-wide{max-width:none}"
+  + ".mv-wide .mv-wrap{display:grid;grid-template-columns:370px 1fr;gap:18px;align-items:start}"
+  + ".mv-wide .mv-col-a{position:sticky;top:8px}"
+  + ".mv-wide .mv-hero{margin-bottom:12px}"
+  + ".mv-wide .mv-donutwrap{width:250px;height:250px;margin:12px auto 4px}"
+  + ".mv-wide .mv-controls{margin-bottom:0}"
+  + ".mv-wide .mv-pots{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start}"
+  + ".mv-wide .mv-add{grid-column:1/-1}"
   // hero
   + ".mv-hero{background:var(--grad);border-radius:22px;padding:18px 18px 10px;color:#fff;box-shadow:0 10px 30px rgba(15,22,19,.18);margin-bottom:12px}"
   + ".mv-hlab{font-size:12px;font-weight:700;color:rgba(255,255,255,.62);letter-spacing:.02em}"
@@ -341,12 +349,13 @@ react/cjs/react-jsx-runtime.production.js:
     var cur=huidigeValuta();
     var pots=state.potjes.length ? state.potjes.map(function(p){return potHTML(p,calc);}).join("") : '<div class="mv-empty">Nog geen potjes. Kies een preset of voeg er een toe.</div>';
     vHost.innerHTML=
-      '<div class="mv-hero"><span class="mv-hlab">Te verdelen bedrag</span><div class="mv-inrow"><span class="mv-cur">'+esc(cur.s)+'</span><span class="mv-in mv-in-ro">'+bedragTekst(state.inkomen)+'</span></div><span class="mv-hhint">↪ overgenomen van je dashboard</span>'
+      '<div class="mv-wrap"><div class="mv-col-a"><div class="mv-hero"><span class="mv-hlab">Te verdelen bedrag</span><div class="mv-inrow"><span class="mv-cur">'+esc(cur.s)+'</span><span class="mv-in mv-in-ro">'+bedragTekst(state.inkomen)+'</span></div><span class="mv-hhint">↪ overgenomen van je dashboard</span>'
       +'<div class="mv-donutwrap"><div>'+donutSVG(calc)+'</div><div class="mv-center">'+centerHTML(calc)+'</div></div></div>'
       +'<div class="mv-controls"><div class="mv-presets"><button data-act="preset" data-p="potjes">Potjes</button><button data-act="preset" data-p="50/30/20">50/30/20</button><button data-act="preset" data-p="leeg">Leeg</button></div><div class="mv-basis"><span>% van</span><div class="mv-toggle"><button data-act="basis" data-b="totaal" class="'+(state.basis==="totaal"?"on":"")+'">totaal</button><button data-act="basis" data-b="restant" class="'+(state.basis==="restant"?"on":"")+'">restant</button></div></div></div>'
-      +'<div class="mv-pots">'+pots+'</div>'
+      +'</div><div class="mv-col-b"><div class="mv-pots">'+pots+'</div>'
       +(state.potjes.length>=20?'<div class="mv-add mv-add-off">Maximaal 20 potjes bereikt</div>':'<button class="mv-add" data-act="add">+ Potje toevoegen</button>')
-      +(calc.pctTotaal>100?'<div class="mv-warn">Je procent-potjes zijn samen '+calc.pctTotaal+'% — meer dan 100%</div>':'');
+      +(calc.pctTotaal>100?'<div class="mv-warn">Je procent-potjes zijn samen '+calc.pctTotaal+'% — meer dan 100%</div>':'')+'</div></div>';
+    setBreite();
     bindInputs();
   }
 
@@ -399,6 +408,11 @@ react/cjs/react-jsx-runtime.production.js:
     bewaar(); render();
   }
 
+  function setBreite(){
+    if(!vHost) return;
+    var w=vHost.clientWidth||(vHost.parentElement&&vHost.parentElement.clientWidth)||0;
+    vHost.classList.toggle("mv-wide", w>=720);
+  }
   function mountVerdeler(el){
     laad();
     try{ var di=Number(window.__mvInkomen); if(isFinite(di)&&di>0) state.inkomen=Math.round(di*100)/100; }catch(e){}
@@ -407,6 +421,7 @@ react/cjs/react-jsx-runtime.production.js:
     el.appendChild(host); el.__mvHost=host; vHost=host;
     host.addEventListener("click", onClick);
     render();
+    try{ new ResizeObserver(function(){ setBreite(); }).observe(host); }catch(e){ window.addEventListener("resize", setBreite); }
   }
 
   function mountSettings(el){
@@ -457,6 +472,6 @@ react/cjs/react-jsx-runtime.production.js:
 })();
 
 </script>
-<!-- EINDE MEXO VERDELER v10 -->
+<!-- EINDE MEXO VERDELER v11 -->
 </body>
 </html>
