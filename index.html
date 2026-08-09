@@ -143,7 +143,7 @@ react/cjs/react-jsx-runtime.production.js:
 */
 </script>
 
-<!-- MEXO VERDELER v11 (beeldvullende desktop-layout). Verwijder dit blok + de code-edits om terug te draaien. -->
+<!-- MEXO VERDELER v12 (beeldvullend fix). Verwijder dit blok + de code-edits om terug te draaien. -->
 <script>
 /* ── Mexo Verdeler — in-app, in de echte Mexo-stijl ──────────────────
    Vult #mv-mount (Budget-tab) en #mv-settings-mount (Instellingen).
@@ -410,7 +410,8 @@ react/cjs/react-jsx-runtime.production.js:
 
   function setBreite(){
     if(!vHost) return;
-    var w=vHost.clientWidth||(vHost.parentElement&&vHost.parentElement.clientWidth)||0;
+    var p=vHost.parentElement;
+    var w=(p&&p.clientWidth)||vHost.clientWidth||0;
     vHost.classList.toggle("mv-wide", w>=720);
   }
   function mountVerdeler(el){
@@ -421,7 +422,7 @@ react/cjs/react-jsx-runtime.production.js:
     el.appendChild(host); el.__mvHost=host; vHost=host;
     host.addEventListener("click", onClick);
     render();
-    try{ new ResizeObserver(function(){ setBreite(); }).observe(host); }catch(e){ window.addEventListener("resize", setBreite); }
+    try{ new ResizeObserver(function(){ setBreite(); }).observe(el); }catch(e){ window.addEventListener("resize", setBreite); }
   }
 
   function mountSettings(el){
@@ -472,6 +473,6 @@ react/cjs/react-jsx-runtime.production.js:
 })();
 
 </script>
-<!-- EINDE MEXO VERDELER v11 -->
+<!-- EINDE MEXO VERDELER v12 -->
 </body>
 </html>
