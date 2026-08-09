@@ -143,7 +143,7 @@ react/cjs/react-jsx-runtime.production.js:
 */
 </script>
 
-<!-- MEXO VERDELER v7 (Mexo-stijl, read-only inkomen). Verwijder dit blok + de code-edits om terug te draaien. -->
+<!-- MEXO VERDELER v8. Verwijder dit blok + de code-edits om terug te draaien. -->
 <script>
 /* ── Mexo Verdeler — in-app, in de echte Mexo-stijl ──────────────────
    Vult #mv-mount (Budget-tab) en #mv-settings-mount (Instellingen).
@@ -255,12 +255,14 @@ react/cjs/react-jsx-runtime.production.js:
   + ".mv-toggle button.on,.mv-types button.on{background:#fff;color:var(--acctxt);box-shadow:0 1px 3px rgba(15,22,19,.08)}"
   // pots
   + ".mv-pot{background:var(--card);border:1px solid var(--rand);border-radius:16px;padding:11px 12px;margin-bottom:8px}"
-  + ".mv-ptop{display:flex;align-items:center;gap:10px}"
+  + ".mv-ptop{display:flex;align-items:center;gap:8px}"
   + ".mv-chip{width:34px;height:34px;border-radius:11px;border:none;display:flex;align-items:center;justify-content:center;font-size:17px;cursor:pointer;flex-shrink:0;box-shadow:0 2px 6px rgba(15,22,19,.12)}"
   + ".mv-name{flex:1;min-width:0;border:none;background:transparent;color:var(--txt);font-size:15px;font-weight:800;outline:none}"
   + ".mv-amt{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--txt)}"
   + ".mv-chev{width:30px;height:30px;border:none;background:transparent;color:var(--txt4);font-size:14px;cursor:pointer}"
-  + ".mv-pmid{display:flex;align-items:center;gap:10px;margin-top:9px;padding-left:44px}"
+  + ".mv-trash{width:30px;height:30px;border:none;background:transparent;color:var(--txt4);font-size:14px;cursor:pointer;line-height:1;border-radius:8px;flex-shrink:0}"
+  + ".mv-trash:hover{color:var(--err);background:rgba(192,57,43,.08)}"
+  + ".mv-pmid{display:flex;align-items:center;gap:10px;margin-top:9px;padding-left:44px;padding-right:6px}"
   + ".mv-val{display:flex;align-items:center;gap:5px;flex:1}"
   + ".mv-val span{color:var(--txt3);font-size:14px}"
   + ".mv-val input{flex:1;width:100%;border:1px solid var(--rand);background:#fff;color:var(--txt);border-radius:10px;padding:7px 10px;font-size:14px;outline:none;font-variant-numeric:tabular-nums}"
@@ -269,7 +271,7 @@ react/cjs/react-jsx-runtime.production.js:
   + ".mv-slide input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:6px;outline:none}"
   + ".mv-slide input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--c);cursor:pointer;border:3px solid var(--card);box-shadow:0 1px 3px rgba(15,22,19,.2)}"
   + ".mv-slide input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--c);cursor:pointer;border:3px solid var(--card)}"
-  + ".mv-pct{font-size:13px;font-weight:800;color:var(--txt3);width:40px;text-align:right;font-variant-numeric:tabular-nums}"
+  + ".mv-pct{font-size:13px;font-weight:800;color:var(--txt3);min-width:44px;padding-left:6px;text-align:right;font-variant-numeric:tabular-nums}"
   + ".mv-restnote{font-size:12px;color:var(--txt3);flex:1}"
   + ".mv-edit{margin-top:11px;padding-top:11px;padding-left:44px;border-top:1px solid var(--rand);display:flex;flex-direction:column;gap:10px}"
   + ".mv-sw,.mv-em{display:flex;flex-wrap:wrap;gap:6px}"
@@ -280,6 +282,7 @@ react/cjs/react-jsx-runtime.production.js:
   + ".mv-del{align-self:flex-start;border:none;background:transparent;color:var(--err);font-size:13px;font-weight:700;cursor:pointer;padding:2px 0}"
   + ".mv-add{width:100%;margin-top:8px;padding:13px;border-radius:16px;border:1.5px dashed var(--rand2);background:transparent;color:var(--txt3);font-size:14px;font-weight:700;cursor:pointer;transition:.15s}"
   + ".mv-add:hover{border-color:var(--acc);color:var(--acctxt)}"
+  + ".mv-add-off{opacity:.6;cursor:default;text-align:center}"
   + ".mv-warn{font-size:12px;color:var(--err);text-align:center;margin:8px 0 0;font-weight:600}"
   + ".mv-empty{text-align:center;color:var(--txt3);font-size:13px;padding:26px 14px;border:1.5px dashed var(--rand2);border-radius:16px}"
   // settings
@@ -325,9 +328,9 @@ react/cjs/react-jsx-runtime.production.js:
     if(state.open===p.id){
       var sw=KLEUREN.map(function(k){ return '<button data-act="kleur" data-id="'+p.id+'" data-kleur="'+k+'" class="'+(p.kleur===k?"on":"")+'" style="background:'+k+'"></button>'; }).join("");
       var em=EMOJI.map(function(e){ return '<button data-act="emoji" data-id="'+p.id+'" data-emoji="'+e+'" class="'+(p.emoji===e?"on":"")+'">'+e+'</button>'; }).join("");
-      edit='<div class="mv-edit"><div class="mv-sw">'+sw+'</div><div class="mv-em">'+em+'</div><button class="mv-del" data-act="del" data-id="'+p.id+'">🗑 Verwijder potje</button></div>';
+      edit='<div class="mv-edit"><div class="mv-sw">'+sw+'</div><div class="mv-em">'+em+'</div></div>';
     }
-    return '<div class="mv-pot"><div class="mv-ptop"><button class="mv-chip" data-act="focus" data-id="'+p.id+'" style="background:'+p.kleur+'">'+(p.emoji||"💶")+'</button><input class="mv-name" data-inp="naam" data-id="'+p.id+'" value="'+esc(p.naam)+'"><span class="mv-amt" data-amt="'+p.id+'">'+euro(calc.bedragen[p.id])+'</span><button class="mv-chev" data-act="open" data-id="'+p.id+'">'+(state.open===p.id?"▲":"▼")+'</button></div><div class="mv-pmid"><div class="mv-types">'+tb+'</div>'+mid+'</div>'+edit+'</div>';
+    return '<div class="mv-pot"><div class="mv-ptop"><button class="mv-chip" data-act="focus" data-id="'+p.id+'" style="background:'+p.kleur+'">'+(p.emoji||"💶")+'</button><input class="mv-name" data-inp="naam" data-id="'+p.id+'" value="'+esc(p.naam)+'"><span class="mv-amt" data-amt="'+p.id+'">'+euro(calc.bedragen[p.id])+'</span><button class="mv-trash" data-act="del" data-id="'+p.id+'" title="Verwijder potje">🗑</button><button class="mv-chev" data-act="open" data-id="'+p.id+'">'+(state.open===p.id?"▲":"▼")+'</button></div><div class="mv-pmid"><div class="mv-types">'+tb+'</div>'+mid+'</div>'+edit+'</div>';
   }
 
   var vHost=null;
@@ -342,7 +345,7 @@ react/cjs/react-jsx-runtime.production.js:
       +'<div class="mv-donutwrap"><div>'+donutSVG(calc)+'</div><div class="mv-center">'+centerHTML(calc)+'</div></div></div>'
       +'<div class="mv-controls"><div class="mv-presets"><button data-act="preset" data-p="potjes">Potjes</button><button data-act="preset" data-p="50/30/20">50/30/20</button><button data-act="preset" data-p="leeg">Leeg</button></div><div class="mv-basis"><span>% van</span><div class="mv-toggle"><button data-act="basis" data-b="totaal" class="'+(state.basis==="totaal"?"on":"")+'">totaal</button><button data-act="basis" data-b="restant" class="'+(state.basis==="restant"?"on":"")+'">restant</button></div></div></div>'
       +'<div class="mv-pots">'+pots+'</div>'
-      +'<button class="mv-add" data-act="add">+ Potje toevoegen</button>'
+      +(state.potjes.length>=20?'<div class="mv-add mv-add-off">Maximaal 20 potjes bereikt</div>':'<button class="mv-add" data-act="add">+ Potje toevoegen</button>')
       +(calc.pctTotaal>100?'<div class="mv-warn">Je procent-potjes zijn samen '+calc.pctTotaal+'% — meer dan 100%</div>':'');
     bindInputs();
   }
@@ -383,7 +386,7 @@ react/cjs/react-jsx-runtime.production.js:
     var act=t.getAttribute("data-act");
     var id=t.getAttribute("data-id")?Number(t.getAttribute("data-id")):null;
     var p=id?state.potjes.filter(function(x){return x.id===id;})[0]:null;
-    if(act==="add"){ var n={id:nid(),naam:"Nieuw potje",type:"vast",waarde:0,kleur:KLEUREN[state.potjes.length%KLEUREN.length],emoji:EMOJI[state.potjes.length%EMOJI.length]}; state.potjes.push(n); state.open=n.id; }
+    if(act==="add"){ if(state.potjes.length>=20) return; var n={id:nid(),naam:"Nieuw potje",type:"vast",waarde:0,kleur:KLEUREN[state.potjes.length%KLEUREN.length],emoji:EMOJI[state.potjes.length%EMOJI.length]}; state.potjes.push(n); state.open=n.id; }
     else if(act==="preset"){ state.potjes=withIds(PRESETS[t.getAttribute("data-p")]); state.open=null; state.focus=null; }
     else if(act==="basis"){ state.basis=t.getAttribute("data-b"); }
     else if(act==="type"&&p){ p.type=t.getAttribute("data-type"); }
@@ -454,6 +457,6 @@ react/cjs/react-jsx-runtime.production.js:
 })();
 
 </script>
-<!-- EINDE MEXO VERDELER v7 -->
+<!-- EINDE MEXO VERDELER v8 -->
 </body>
 </html>
