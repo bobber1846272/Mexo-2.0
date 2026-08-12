@@ -143,7 +143,7 @@ react/cjs/react-jsx-runtime.production.js:
 */
 </script>
 
-<!-- MEXO VERDELER v18 (spaaroverzicht + soort). Verwijder dit blok + de code-edits om terug te draaien. -->
+<!-- MEXO VERDELER v19 (spaaroverzicht ruimte). Verwijder dit blok + de code-edits om terug te draaien. -->
 <script>
 /* ── Mexo Verdeler — in-app, in de echte Mexo-stijl ──────────────────
    Vult #mv-mount (Budget-tab) en #mv-settings-mount (Instellingen).
@@ -310,7 +310,8 @@ react/cjs/react-jsx-runtime.production.js:
   + ".mv-soort{display:flex;gap:6px;margin-bottom:2px}"
   + ".mv-soort button{flex:1;border:1px solid var(--rand);background:#fff;color:var(--txt3);font-size:12.5px;font-weight:700;padding:8px;border-radius:10px;cursor:pointer}"
   + ".mv-soort button.on{border-color:var(--acc);background:var(--tint);color:var(--acctxt)}"
-  + ".mv-spaar-leeg{font-size:12.5px;color:var(--txt3);line-height:1.5}"
+  + ".mv-spaar{margin-top:12px}"
+  + ".mv-spaar-leeg{margin-top:12px;font-size:12.5px;color:var(--txt3);line-height:1.5;background:var(--card);border:1px solid var(--rand);border-radius:16px;padding:14px}"
   + ".mv-sp-groot{background:var(--tint);border-radius:14px;padding:13px 15px;display:flex;flex-direction:column;gap:2px;margin-bottom:8px}"
   + ".mv-sp-groot-l{font-size:12px;font-weight:800;color:var(--acctxt)}"
   + ".mv-sp-groot-v{font-size:25px;font-weight:800;color:var(--acctxt);letter-spacing:-.02em;font-variant-numeric:tabular-nums}"
@@ -382,8 +383,8 @@ react/cjs/react-jsx-runtime.production.js:
     var _sp=state.potjes.filter(function(p){return p.soort==="sparen";});
     var _spTot=_sp.reduce(function(s,p){return s+(calc.bedragen[p.id]||0);},0)*12;
     var spaarHTML=_sp.length
-      ? '<div class="mv-card mv-spaar"><div class="mv-sp-groot"><span class="mv-sp-groot-l">💰 Zo spaar je per jaar</span><span class="mv-sp-groot-v">'+euro(_spTot)+'</span></div><div class="mv-sp-grid">'+_sp.map(function(p){return '<div class="mv-sp-cel"><span class="mv-sp-cel-top"><span class="mv-sp-emoji">'+(p.emoji||"💰")+'</span>'+esc(p.naam)+'</span><span class="mv-sp-cel-v">'+euro((calc.bedragen[p.id]||0)*12)+'</span></div>';}).join("")+'</div></div>'
-      : '<div class="mv-card mv-spaar-leeg">Markeer een potje als <b>Sparen</b> (via het pijltje) om te zien wat je per jaar opzij legt.</div>';
+      ? '<div class="mv-spaar"><div class="mv-sp-groot"><span class="mv-sp-groot-l">💰 Zo spaar je per jaar</span><span class="mv-sp-groot-v">'+euro(_spTot)+'</span></div><div class="mv-sp-grid">'+_sp.map(function(p){return '<div class="mv-sp-cel"><span class="mv-sp-cel-top"><span class="mv-sp-emoji">'+(p.emoji||"💰")+'</span>'+esc(p.naam)+'</span><span class="mv-sp-cel-v">'+euro((calc.bedragen[p.id]||0)*12)+'</span></div>';}).join("")+'</div></div>'
+      : '<div class="mv-spaar-leeg">Markeer een potje als <b>Sparen</b> (via het pijltje) om te zien wat je per jaar opzij legt.</div>';
     vHost.innerHTML=
       '<div class="mv-wrap"><div class="mv-col-a"><div class="mv-hero"><span class="mv-hlab">Te verdelen bedrag</span><div class="mv-inrow"><span class="mv-cur">'+esc(cur.s)+'</span><span class="mv-in mv-in-ro">'+bedragTekst(state.inkomen)+'</span></div><span class="mv-hhint">↪ overgenomen van je dashboard</span>'
       +'<div class="mv-donutwrap"><div>'+donutSVG(calc)+'</div><div class="mv-center">'+centerHTML(calc)+'</div></div></div>'
@@ -510,6 +511,6 @@ react/cjs/react-jsx-runtime.production.js:
 })();
 
 </script>
-<!-- EINDE MEXO VERDELER v18 -->
+<!-- EINDE MEXO VERDELER v19 -->
 </body>
 </html>
