@@ -143,7 +143,7 @@ react/cjs/react-jsx-runtime.production.js:
 */
 </script>
 
-<!-- MEXO VERDELER v17 (+ potje-detailpaneel + spaar/jaar). Verwijder dit blok + de code-edits om terug te draaien. -->
+<!-- MEXO VERDELER v18 (spaaroverzicht + soort). Verwijder dit blok + de code-edits om terug te draaien. -->
 <script>
 /* ── Mexo Verdeler — in-app, in de echte Mexo-stijl ──────────────────
    Vult #mv-mount (Budget-tab) en #mv-settings-mount (Instellingen).
@@ -160,15 +160,15 @@ react/cjs/react-jsx-runtime.production.js:
 
   var PRESETS = {
     potjes: [
-      { naam:"Huur", type:"vast", waarde:850, kleur:"#0C8F63", emoji:"🏠" },
-      { naam:"Boodschappen", type:"vast", waarde:300, kleur:"#F59E0B", emoji:"🛒" },
-      { naam:"Sparen", type:"percentage", waarde:15, kleur:"#2DD4A7", emoji:"🐷" },
-      { naam:"Vrij besteedbaar", type:"rest", waarde:0, kleur:"#0EA5E9", emoji:"💶" }
+      { naam:"Huur", type:"vast", waarde:850, kleur:"#0C8F63", emoji:"🏠", soort:"uitgave" },
+      { naam:"Boodschappen", type:"vast", waarde:300, kleur:"#F59E0B", emoji:"🛒", soort:"uitgave" },
+      { naam:"Sparen", type:"percentage", waarde:15, kleur:"#2DD4A7", emoji:"🐷", soort:"sparen" },
+      { naam:"Vrij besteedbaar", type:"rest", waarde:0, kleur:"#0EA5E9", emoji:"💶", soort:"uitgave" }
     ],
     "50/30/20": [
-      { naam:"Behoeften", type:"percentage", waarde:50, kleur:"#0C8F63", emoji:"🏠" },
-      { naam:"Wensen", type:"percentage", waarde:30, kleur:"#EC4899", emoji:"❤️" },
-      { naam:"Sparen", type:"rest", waarde:0, kleur:"#2DD4A7", emoji:"🐷" }
+      { naam:"Behoeften", type:"percentage", waarde:50, kleur:"#0C8F63", emoji:"🏠", soort:"uitgave" },
+      { naam:"Wensen", type:"percentage", waarde:30, kleur:"#EC4899", emoji:"❤️", soort:"uitgave" },
+      { naam:"Sparen", type:"rest", waarde:0, kleur:"#2DD4A7", emoji:"🐷", soort:"sparen" }
     ],
     leeg: []
   };
@@ -204,17 +204,18 @@ react/cjs/react-jsx-runtime.production.js:
       try{ window.__mvSetInst(function(prev){ var o=Object.assign({},prev||{}); o.verdeler={potjes:state.potjes,basis:state.basis}; return o; }); }catch(e){}
     }, 900);
   }
+  function normSoort(){ state.potjes.forEach(function(p){ if(!p.soort) p.soort=/spaar/i.test(p.naam||"")?"sparen":"uitgave"; }); }
   function laad(){
     var v=leesInst();
     if(v && Array.isArray(v.potjes)){
       state.potjes=v.potjes; if(v.basis) state.basis=v.basis;
       v.potjes.forEach(function(p){ if(p.id>seq)seq=p.id; });
-      return;
+      normSoort(); return;
     }
     try{ var r=localStorage.getItem("mexo-verdeler"); if(r){ var d=JSON.parse(r);
       if(Array.isArray(d.potjes)){ state.potjes=d.potjes; d.potjes.forEach(function(p){ if(p.id>seq)seq=p.id; }); }
       if(d.basis) state.basis=d.basis; } }catch(e){}
-    schrijfInst();
+    normSoort(); schrijfInst();
   }
   function bewaar(){
     try{ localStorage.setItem("mexo-verdeler", JSON.stringify({potjes:state.potjes,basis:state.basis})); }catch(e){}
@@ -306,18 +307,18 @@ react/cjs/react-jsx-runtime.production.js:
   + ".mv-em button{width:30px;height:30px;border-radius:9px;border:1px solid var(--rand);background:var(--tint);font-size:15px;cursor:pointer}"
   + ".mv-em button.on{border-color:var(--acc);background:#fff}"
   + ".mv-del{align-self:flex-start;border:none;background:transparent;color:var(--err);font-size:13px;font-weight:700;cursor:pointer;padding:2px 0}"
-  + ".mv-esub{font-size:11px;font-weight:700;color:var(--txt4);text-transform:uppercase;letter-spacing:.03em;margin-top:2px}"
-  + ".mv-jaar{display:flex;gap:8px;margin-bottom:2px}"
-  + ".mv-jaar-cel{flex:1;background:var(--tint);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}"
-  + ".mv-jaar-l{font-size:11px;font-weight:700;color:var(--acctxt)}"
-  + ".mv-jaar-v{font-size:15px;font-weight:800;color:var(--txt);font-variant-numeric:tabular-nums}"
-  + ".mv-jaar-big{font-size:18px;color:var(--acctxt)}"
-  + ".mv-detail-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}"
-  + ".mv-detail-naam{flex:1;font-size:15px;font-weight:800;color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
-  + ".mv-detail-x{width:30px;height:30px;border:none;background:transparent;color:var(--txt4);font-size:15px;cursor:pointer;border-radius:8px}"
-  + ".mv-detail-x:hover{background:var(--tint)}"
-  + ".mv-detail-body{display:flex;flex-direction:column;gap:8px}"
-  + ".mv-wide .mv-pot.mv-pot-open{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc)}"
+  + ".mv-soort{display:flex;gap:6px;margin-bottom:2px}"
+  + ".mv-soort button{flex:1;border:1px solid var(--rand);background:#fff;color:var(--txt3);font-size:12.5px;font-weight:700;padding:8px;border-radius:10px;cursor:pointer}"
+  + ".mv-soort button.on{border-color:var(--acc);background:var(--tint);color:var(--acctxt)}"
+  + ".mv-spaar-leeg{font-size:12.5px;color:var(--txt3);line-height:1.5}"
+  + ".mv-sp-groot{background:var(--tint);border-radius:14px;padding:13px 15px;display:flex;flex-direction:column;gap:2px;margin-bottom:8px}"
+  + ".mv-sp-groot-l{font-size:12px;font-weight:800;color:var(--acctxt)}"
+  + ".mv-sp-groot-v{font-size:25px;font-weight:800;color:var(--acctxt);letter-spacing:-.02em;font-variant-numeric:tabular-nums}"
+  + ".mv-sp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}"
+  + ".mv-sp-cel{background:#f6f8f6;border:1px solid var(--rand);border-radius:12px;padding:9px 11px;display:flex;flex-direction:column;gap:3px;min-width:0}"
+  + ".mv-sp-cel-top{font-size:12px;font-weight:700;color:var(--txt3);display:flex;align-items:center;gap:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
+  + ".mv-sp-emoji{font-size:14px;flex-shrink:0}"
+  + ".mv-sp-cel-v{font-size:15px;font-weight:800;color:var(--txt);font-variant-numeric:tabular-nums}"
   + ".mv-add{width:100%;margin-top:8px;padding:13px;border-radius:16px;border:1.5px dashed var(--rand2);background:transparent;color:var(--txt3);font-size:14px;font-weight:700;cursor:pointer;transition:.15s}"
   + ".mv-add:hover{border-color:var(--acc);color:var(--acctxt)}"
   + ".mv-add-off{opacity:.6;cursor:default;text-align:center}"
@@ -356,14 +357,6 @@ react/cjs/react-jsx-runtime.production.js:
     if(calc.vrij>0) return '<span class="mv-clab" style="color:var(--bonus)">Nog te verdelen</span><span class="mv-cbig" style="color:var(--bonus)">'+euro(calc.vrij)+'</span><span class="mv-csub">voeg een rest-potje toe</span>';
     return '<span class="mv-clab" style="color:var(--acc)">✓ Verdeeld</span><span class="mv-cbig">'+euro(calc.toegewezen)+'</span><span class="mv-csub">helemaal toegewezen</span>';
   }
-  function editHTML(p,calc){
-    var sw=KLEUREN.map(function(k){ return '<button data-act="kleur" data-id="'+p.id+'" data-kleur="'+k+'" class="'+(p.kleur===k?"on":"")+'" style="background:'+k+'"></button>'; }).join("");
-    var em=EMOJI.map(function(e){ return '<button data-act="emoji" data-id="'+p.id+'" data-emoji="'+e+'" class="'+(p.emoji===e?"on":"")+'">'+e+'</button>'; }).join("");
-    var c=(calc.bedragen[p.id]||0);
-    return '<div class="mv-jaar"><div class="mv-jaar-cel"><span class="mv-jaar-l">Per maand</span><span class="mv-jaar-v">'+euro(c)+'</span></div><div class="mv-jaar-cel"><span class="mv-jaar-l">Per jaar</span><span class="mv-jaar-v mv-jaar-big">'+euro(c*12)+'</span></div></div>'
-      +'<div class="mv-esub">Kleur</div><div class="mv-sw">'+sw+'</div>'
-      +'<div class="mv-esub">Icoon</div><div class="mv-em">'+em+'</div>';
-  }
   function potHTML(p,calc){
     var tb=[["vast","€"],["percentage","%"],["rest","rest"]].map(function(t){ return '<button data-act="type" data-id="'+p.id+'" data-type="'+t[0]+'" class="'+(p.type===t[0]?"on":"")+'">'+t[1]+'</button>'; }).join("");
     var mid;
@@ -371,24 +364,31 @@ react/cjs/react-jsx-runtime.production.js:
     else if(p.type==="percentage") mid='<div class="mv-slide"><input data-inp="waarde" data-id="'+p.id+'" type="range" min="0" max="100" step="1" value="'+esc(p.waarde)+'" style="--c:'+p.kleur+';background:linear-gradient(to right,'+p.kleur+' '+p.waarde+'%,var(--tint) '+p.waarde+'%)"><span class="mv-pct" data-pct="'+p.id+'">'+p.waarde+'%</span></div>';
     else mid='<span class="mv-restnote">Vangt het restant op</span>';
     var edit="";
-    if(state.open===p.id && !wijd){ edit='<div class="mv-edit">'+editHTML(p,calc)+'</div>'; }
-    return '<div class="mv-pot'+(state.open===p.id?" mv-pot-open":"")+'"><div class="mv-ptop"><button class="mv-chip" data-act="focus" data-id="'+p.id+'" style="background:'+p.kleur+'">'+(p.emoji||"💶")+'</button><input class="mv-name" data-inp="naam" data-id="'+p.id+'" value="'+esc(p.naam)+'"><span class="mv-amt" data-amt="'+p.id+'">'+euro(calc.bedragen[p.id])+'</span><button class="mv-trash" data-act="del" data-id="'+p.id+'" title="Verwijder potje">🗑</button><button class="mv-chev" data-act="open" data-id="'+p.id+'">'+(state.open===p.id?"▲":"▼")+'</button></div><div class="mv-pmid"><div class="mv-types">'+tb+'</div>'+mid+'</div>'+edit+'</div>';
+    if(state.open===p.id){
+      var sw=KLEUREN.map(function(k){ return '<button data-act="kleur" data-id="'+p.id+'" data-kleur="'+k+'" class="'+(p.kleur===k?"on":"")+'" style="background:'+k+'"></button>'; }).join("");
+      var em=EMOJI.map(function(e){ return '<button data-act="emoji" data-id="'+p.id+'" data-emoji="'+e+'" class="'+(p.emoji===e?"on":"")+'">'+e+'</button>'; }).join("");
+      edit='<div class="mv-edit"><div class="mv-soort"><button data-act="soort" data-id="'+p.id+'" data-soort="sparen" class="'+(p.soort==="sparen"?"on":"")+'">💰 Sparen</button><button data-act="soort" data-id="'+p.id+'" data-soort="uitgave" class="'+((p.soort||"uitgave")==="uitgave"?"on":"")+'">🧾 Uitgave</button></div><div class="mv-sw">'+sw+'</div><div class="mv-em">'+em+'</div></div>';
+    }
+    return '<div class="mv-pot"><div class="mv-ptop"><button class="mv-chip" data-act="focus" data-id="'+p.id+'" style="background:'+p.kleur+'">'+(p.emoji||"💶")+'</button><input class="mv-name" data-inp="naam" data-id="'+p.id+'" value="'+esc(p.naam)+'"><span class="mv-amt" data-amt="'+p.id+'">'+euro(calc.bedragen[p.id])+'</span><button class="mv-trash" data-act="del" data-id="'+p.id+'" title="Verwijder potje">🗑</button><button class="mv-chev" data-act="open" data-id="'+p.id+'">'+(state.open===p.id?"▲":"▼")+'</button></div><div class="mv-pmid"><div class="mv-types">'+tb+'</div>'+mid+'</div>'+edit+'</div>';
   }
 
-  var vHost=null, wijd=false;
+  var vHost=null;
 
   function render(){
     if(!vHost) return;
     var calc=compute();
     var cur=huidigeValuta();
     var pots=state.potjes.length ? state.potjes.map(function(p){return potHTML(p,calc);}).join("") : '<div class="mv-empty">Nog geen potjes. Kies een preset of voeg er een toe.</div>';
-    var detail="";
-    if(wijd&&state.open){var _op=state.potjes.filter(function(x){return x.id===state.open;})[0];if(_op){detail='<div class="mv-card mv-detail"><div class="mv-detail-head"><span class="mv-chip" style="background:'+_op.kleur+';cursor:default">'+(_op.emoji||"💶")+'</span><span class="mv-detail-naam">'+esc(_op.naam)+'</span><button class="mv-detail-x" data-act="open" data-id="'+_op.id+'">✕</button></div><div class="mv-detail-body">'+editHTML(_op,calc)+'</div></div>';}}
+    var _sp=state.potjes.filter(function(p){return p.soort==="sparen";});
+    var _spTot=_sp.reduce(function(s,p){return s+(calc.bedragen[p.id]||0);},0)*12;
+    var spaarHTML=_sp.length
+      ? '<div class="mv-card mv-spaar"><div class="mv-sp-groot"><span class="mv-sp-groot-l">💰 Zo spaar je per jaar</span><span class="mv-sp-groot-v">'+euro(_spTot)+'</span></div><div class="mv-sp-grid">'+_sp.map(function(p){return '<div class="mv-sp-cel"><span class="mv-sp-cel-top"><span class="mv-sp-emoji">'+(p.emoji||"💰")+'</span>'+esc(p.naam)+'</span><span class="mv-sp-cel-v">'+euro((calc.bedragen[p.id]||0)*12)+'</span></div>';}).join("")+'</div></div>'
+      : '<div class="mv-card mv-spaar-leeg">Markeer een potje als <b>Sparen</b> (via het pijltje) om te zien wat je per jaar opzij legt.</div>';
     vHost.innerHTML=
       '<div class="mv-wrap"><div class="mv-col-a"><div class="mv-hero"><span class="mv-hlab">Te verdelen bedrag</span><div class="mv-inrow"><span class="mv-cur">'+esc(cur.s)+'</span><span class="mv-in mv-in-ro">'+bedragTekst(state.inkomen)+'</span></div><span class="mv-hhint">↪ overgenomen van je dashboard</span>'
       +'<div class="mv-donutwrap"><div>'+donutSVG(calc)+'</div><div class="mv-center">'+centerHTML(calc)+'</div></div></div>'
       +'<div class="mv-controls"><div class="mv-presets"><button data-act="preset" data-p="potjes">Potjes</button><button data-act="preset" data-p="50/30/20">50/30/20</button><button data-act="preset" data-p="leeg">Leeg</button></div><div class="mv-basis"><span>% van</span><div class="mv-toggle"><button data-act="basis" data-b="totaal" class="'+(state.basis==="totaal"?"on":"")+'">totaal</button><button data-act="basis" data-b="restant" class="'+(state.basis==="restant"?"on":"")+'">restant</button></div></div></div>'
-      +detail+'</div><div class="mv-col-b"><div class="mv-pots">'+pots+'</div>'
+      +spaarHTML+'</div><div class="mv-col-b"><div class="mv-pots">'+pots+'</div>'
       +(state.potjes.length>=20?'<div class="mv-add mv-add-off">Maximaal 20 potjes bereikt</div>':'<button class="mv-add" data-act="add">+ Potje toevoegen</button>')
       +(calc.pctTotaal>100?'<div class="mv-warn">Je procent-potjes zijn samen '+calc.pctTotaal+'% — meer dan 100%</div>':'')+'</div></div>';
     setBreite();
@@ -431,12 +431,13 @@ react/cjs/react-jsx-runtime.production.js:
     var act=t.getAttribute("data-act");
     var id=t.getAttribute("data-id")?Number(t.getAttribute("data-id")):null;
     var p=id?state.potjes.filter(function(x){return x.id===id;})[0]:null;
-    if(act==="add"){ if(state.potjes.length>=20) return; var n={id:nid(),naam:"Nieuw potje",type:"vast",waarde:0,kleur:KLEUREN[state.potjes.length%KLEUREN.length],emoji:EMOJI[state.potjes.length%EMOJI.length]}; state.potjes.push(n); state.open=n.id; }
-    else if(act==="preset"){ state.potjes=withIds(PRESETS[t.getAttribute("data-p")]); state.open=null; state.focus=null; }
+    if(act==="add"){ if(state.potjes.length>=20) return; var n={id:nid(),naam:"Nieuw potje",type:"vast",waarde:0,kleur:KLEUREN[state.potjes.length%KLEUREN.length],emoji:EMOJI[state.potjes.length%EMOJI.length],soort:"uitgave"}; state.potjes.push(n); state.open=n.id; }
+    else if(act==="preset"){ state.potjes=withIds(PRESETS[t.getAttribute("data-p")]); normSoort(); state.open=null; state.focus=null; }
     else if(act==="basis"){ state.basis=t.getAttribute("data-b"); }
     else if(act==="type"&&p){ p.type=t.getAttribute("data-type"); }
     else if(act==="kleur"&&p){ p.kleur=t.getAttribute("data-kleur"); }
     else if(act==="emoji"&&p){ p.emoji=t.getAttribute("data-emoji"); }
+    else if(act==="soort"&&p){ p.soort=t.getAttribute("data-soort"); }
     else if(act==="del"&&p){ state.potjes=state.potjes.filter(function(x){return x.id!==id;}); if(state.open===id)state.open=null; if(state.focus===id)state.focus=null; }
     else if(act==="open"){ state.open=state.open===id?null:id; }
     else if(act==="focus"){ state.focus=state.focus===id?null:id; }
@@ -445,11 +446,10 @@ react/cjs/react-jsx-runtime.production.js:
   }
 
   function setBreite(){
-    if(!vHost) return false;
+    if(!vHost) return;
     var p=vHost.parentElement;
     var w=(p&&p.clientWidth)||vHost.clientWidth||0;
-    var nu=w>=720; vHost.classList.toggle("mv-wide", nu);
-    var ch=nu!==wijd; wijd=nu; return ch;
+    vHost.classList.toggle("mv-wide", w>=720);
   }
   function mountVerdeler(el){
     laad();
@@ -458,8 +458,8 @@ react/cjs/react-jsx-runtime.production.js:
     host.setAttribute("data-mv-root","");
     el.appendChild(host); el.__mvHost=host; vHost=host;
     host.addEventListener("click", onClick);
-    setBreite(); render();
-    try{ new ResizeObserver(function(){ if(setBreite()) render(); }).observe(el); }catch(e){ window.addEventListener("resize", function(){ if(setBreite()) render(); }); }
+    render();
+    try{ new ResizeObserver(function(){ setBreite(); }).observe(el); }catch(e){ window.addEventListener("resize", setBreite); }
   }
 
   function mountSettings(el){
@@ -510,6 +510,6 @@ react/cjs/react-jsx-runtime.production.js:
 })();
 
 </script>
-<!-- EINDE MEXO VERDELER v17 -->
+<!-- EINDE MEXO VERDELER v18 -->
 </body>
 </html>
